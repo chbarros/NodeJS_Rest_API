@@ -23,8 +23,19 @@ app.use((req,res,next) =>{
     next()
 })
 
-app.get('/app/produtos',(req,res) => {
+app.get('/app/produtos', (req,res) => {
     res.status(200).json(listaProdutos)
+})
+
+app.get('/app/produtos/:id', (req,res) => {
+    const id = parseInt(req.params.id)
+    const idx = listaProdutos.produtos.findIndex(p => p.id === id)
+
+    if(idx > -1){
+        res.status(200).json(listaProdutos.produtos[idx])
+    } else {
+        res.status(404).json({ mensagem: 'Produto não encontrado'})
+    }    
 })
 
 app.get('/',  (req, res) => {
