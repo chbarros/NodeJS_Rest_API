@@ -1,15 +1,5 @@
 // Importa o módulo do Express Framework
-const express = require('express')
-
-const listaProdutos = {
-    produtos: [
-        { id: 1, descricao: "Arroz parboilizado 5Kg", valor: 25.00, marca: "Tio João" },
-        { id: 2, descricao: "Maionese 250gr", valor: 7.20, marca: "Helmans" },
-        { id: 3, descricao: "Iogurte Natural 200ml", valor: 2.50, marca: "Itambé" },
-        { id: 4, descricao: "Batata Maior Palha 300gr", valor: 15.20, marca: "Chipps" },
-        { id: 5, descricao: "Nescau 400gr", valor: 8.00, marca: "Nestlé" },
-    ]
-}    
+const express = require('express')   
 
 // Inicializa um objeto de aplicação Express
 const app = express()
@@ -23,20 +13,8 @@ app.use((req,res,next) =>{
     next()
 })
 
-app.get('/app/produtos', (req,res) => {
-    res.status(200).json(listaProdutos)
-})
-
-app.get('/app/produtos/:id', (req,res) => {
-    const id = parseInt(req.params.id)
-    const idx = listaProdutos.produtos.findIndex(p => p.id === id)
-
-    if(idx > -1){
-        res.status(200).json(listaProdutos.produtos[idx])
-    } else {
-        res.status(404).json({ mensagem: 'Produto não encontrado'})
-    }    
-})
+const apiV1Router = require('./routes/apiV1Router')
+app.use('/app/v1', apiV1Router)
 
 app.get('/',  (req, res) => {
     res.send(`
