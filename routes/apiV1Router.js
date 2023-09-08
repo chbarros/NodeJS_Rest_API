@@ -26,4 +26,44 @@ apiV1Router.get('/produtos/:id', (req,res) => {
     }    
 })
 
+apiV1Router.post('/produtos', (req,res) => {
+    const produto = {   
+        'id': (listaProdutos.length() + 1), 
+        'descricao': req.body.descricao, 
+        'valor': req.body.valor, 
+        'marca': req.body.marca
+    }
+
+    listaProdutos.push(produto);
+
+    return response.json(listaProdutos);
+})
+
+apiV1Router.put('/produtos/:id', (req,res) => {
+    const id = parseInt(req.params.id)
+    const idx = listaProdutos.produtos.findIndex(p => p.id === id)
+
+    if(idx > -1){
+        listaProdutos.produtos[idx].descricao = req.body.descricao
+        listaProdutos.produtos[idx].valor = req.body.valor
+        listaProdutos.produtos[idx].marca = req.body.marca
+    
+        return response.json(listaProdutos);
+    } else {
+        res.status(404).json({ mensagem: 'Produto não encontrado'})
+    }
+})
+
+apiV1Router.delete('/produtos/:id', (req,res) => {
+    const id = parseInt(req.params.id)
+    const idx = listaProdutos.produtos.findIndex(p => p.id === id)
+
+    if(idx > -1){
+        listaProdutos.splice(idx, 1)
+        res.status(200).json(listaProdutos)
+    } else {
+        res.status(404).json({ mensagem: 'Produto não encontrado'})
+    }
+})
+
 module.exports = apiV1Router
