@@ -16,6 +16,9 @@ app.use((req,res,next) =>{
 const apiV1Router = require('./routes/apiV1Router')
 app.use('/app/v1', apiV1Router)
 
+const apiV2Router = require('./routes/apiV2Router')
+app.use('/app/v2', apiV2Router)
+
 app.get('/',  (req, res) => {
     res.send(`
             <form method="POST">
