@@ -1,3 +1,5 @@
+//npx knex seed:make produtos
+
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> } 
